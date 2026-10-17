@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أطلس الحضارات الكبرى | NOTHING Studio®</title>
+    <style>
+        :root {
+            --bg-pure: #ffffff;
+            --bg-gradient: radial-gradient(circle at 50% 0%, rgba(29, 78, 216, 0.07) 0%, rgba(255, 255, 255, 1) 70%);
+            --text-main: #0b1329;
+            --text-muted: #475569;
+            --royal-blue: #1d4ed8;
+            --royal-blue-light: #eff6ff;
+            --royal-gold: #b45309;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(29, 78, 216, 0.2);
+            --shadow-lux: 0 25px 50px -12px rgba(29, 78, 216, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-pure);
+            background-image: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 2;
+        }
+
+        /* شريط علوي للغة */
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+            z-index: 100;
+        }
+
+        .lang-switch-btn {
+            background: #ffffff;
+            border: 1px solid var(--royal-blue);
+            color: var(--royal-blue);
+            padding: 8px 18px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(29,78,216,0.05);
+        }
+
+        .lang-switch-btn:hover {
+            background: var(--royal-blue);
+            color: #ffffff;
+        }
+
+        /* شاشة الترحيب الملكية */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+
+        .royal-frame {
+            border: 2px solid var(--glass-border);
+            padding: 50px 35px;
+            border-radius: 36px;
+            max-width: 850px;
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-lux);
+            position: relative;
+            animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.96) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .royal-frame::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px dashed rgba(29, 78, 216, 0.15);
+            border-radius: 30px;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 40px;
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 14px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            font-weight: 500;
+        }
+
+        /* شبكة أزرار الحضارات الكبرى */
+        .civilizations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .civ-btn {
+            background: #ffffff;
+            border: 1px solid var(--glass-border);
+            padding: 24px;
+            border-radius: 22px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .civ-btn:hover {
+            border-color: var(--royal-blue);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(29, 78, 216, 0.15);
+            background: linear-gradient(135deg, #ffffff, var(--royal-blue-light));
+        }
+
+        .civ-btn .civ-icon { font-size: 32px; margin-bottom: 4px; }
+        .civ-btn .civ-name { font-size: 19px; font-weight: 900; color: var(--royal-blue); }
+        .civ-btn .civ-desc { font-size: 13px; color: var(--text-muted); }
+
+        /* التطبيق الرئيسي */
+        .main-app {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 60px 20px 40px;
+            display: none;
+            animation: fadeInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-header h2 {
+            font-size: 30px;
+            color: var(--royal-blue);
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 18px;
+            margin-bottom: 40px;
+        }
+
+        .chapter-btn {
+            background: #ffffff;
+            border: 1px solid var(--glass-border);
+            padding: 22px;
+            border-radius: 22px;
+            cursor: pointer;
+            text-align: inherit;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+        }
+
+        .chapter-btn:hover {
+            border-color: var(--royal-blue);
+            background: var(--royal-blue-light);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(29, 78, 216, 0.1);
+        }
+
+        .chapter-btn .btn-title { font-size: 18px; font-weight: 800; color: var(--royal-blue); }
+        .chapter-btn .btn-era { font-size: 13px; color: var(--royal-gold); font-weight: 700; }
+
+        /* نافذة العرض المفصل */
+        .detail-view {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: var(--shadow-lux);
+            display: none;
+            animation: fadeInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .wiki-image-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .wiki-image-container a {
+            display: inline-block;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 4px solid #ffffff;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .wiki-image-container a:hover {
+            transform: scale(1.03);
+            box-shadow: 0 25px 50px rgba(29, 78, 216, 0.2);
+        }
+
+        .wiki-image-container img {
+            max-width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .wiki-caption {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 1px solid var(--royal-blue);
+            color: var(--royal-blue);
+            padding: 12px 24px;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(29,78,216,0.05);
+        }
+
+        .nav-btn:hover {
+            background: var(--royal-blue);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(29,78,216,0.2);
+        }
+
+        .detail-title { font-size: 30px; color: var(--royal-blue); font-weight: 900; margin-bottom: 8px; }
+        .detail-era { font-size: 15px; color: var(--royal-gold); font-weight: 800; margin-bottom: 25px; display: inline-block; background: rgba(180, 83, 9, 0.08); padding: 6px 16px; border-radius: 12px; }
+        .detail-desc { font-size: 16px; color: #334155; margin-bottom: 30px; line-height: 2.1; font-weight: 400; }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        @media(max-width: 768px) { .info-grid { grid-template-columns: 1fr; } }
+
+        .info-box {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            text-align: inherit;
+        }
+
+        .info-box h4 { color: var(--royal-blue); font-size: 17px; margin-bottom: 14px; font-weight: 900; border-bottom: 2px solid var(--royal-blue-light); padding-bottom: 8px; }
+        .info-box p, .info-box ul { font-size: 15px; color: var(--text-muted); }
+        .info-box ul { list-style-position: inside; display: flex; flex-direction: column; gap: 8px; }
+
+        .sources-box {
+            background: var(--royal-blue-light);
+            border: 1px dashed var(--royal-blue);
+            padding: 20px;
+            border-radius: 18px;
+            font-size: 14px;
+            color: #1e3a8a;
+            margin-top: 25px;
+            font-weight: 600;
+        }
+
+        /* تذييل المطور */
+        .footer {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(248, 250, 252, 0.8);
+            border-top: 1px solid rgba(226, 232, 240, 0.8);
+            margin-top: 80px;
+        }
+
+        .studio-credit { font-size: 16px; font-weight: 900; color: var(--royal-blue); margin-bottom: 15px; letter-spacing: 0.5px; }
+        .social-links { display: flex; justify-content: center; gap: 16px; margin-top: 18px; }
+        .social-btn {
+            background: #ffffff; border: 1px solid #cbd5e1; padding: 12px 26px; border-radius: 16px; color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: 800; transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .social-btn:hover { border-color: var(--royal-blue); color: var(--royal-blue); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(29,78,216,0.15); }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <!-- شريط تبديل اللغة -->
+    <div class="top-bar">
+        <button class="lang-switch-btn" id="langBtn" onclick="toggleLanguage()">English 🌐</button>
+        <span style="font-size: 12px; color: var(--text-muted); font-weight: 700;" id="studioBrandText">NOTHING Studio®</span>
+    </div>
+
+    <!-- الواجهة الرئيسية -->
+    <section id="heroSection" class="hero-section">
+        <div class="royal-frame">
+            <h1 id="mainTitle">أطلس الحضارات الكبرى</h1>
+            <p class="subtitle" id="mainSubtitle">الموسوعة التاريخية التفاعلية الأنقى والأفخم لاستكشاف أمم التاريخ</p>
+            
+            <div class="civilizations-grid">
+                <button class="civ-btn" onclick="playTransitionSound(); openCivilization('mesopotamia')">
+                    <span class="civ-icon">🏛️</span>
+                    <span class="civ-name" id="btnMesop">بلاد الرافدين</span>
+                    <span class="civ-desc" id="descMesop">من سومر القديمة حتى العراق الحديث 2026</span>
+                </button>
+                <button class="civ-btn" onclick="playTransitionSound(); openCivilization('egypt')">
+                    <span class="civ-icon">🔺</span>
+                    <span class="civ-name" id="btnEgypt">الحضارة المصرية</span>
+                    <span class="civ-desc" id="descEgypt">من الفراعنة حتى الجمهورية الحديثة 2026</span>
+                </button>
+                <button class="civ-btn" onclick="playTransitionSound(); openCivilization('rome')">
+                    <span class="civ-icon">🏛️</span>
+                    <span class="civ-name" id="btnRome">الإمبراطورية الرومانية</span>
+                    <span class="civ-desc" id="descRome">الجمهورية، الإمبراطورية، والتأثير العالمي</span>
+                </button>
+                <button class="civ-btn" onclick="playTransitionSound(); openCivilization('greece')">
+                    <span class="civ-icon">🏺</span>
+                    <span class="civ-name" id="btnGreece">الحضارة اليونانية</span>
+                    <span class="civ-desc" id="descGreece">فلسفة، علوم، وعصر الإسكندر الأكبر</span>
+                </button>
+            </div>
+        </div>
+
+        <div style="position: absolute; bottom: 20px; font-size: 13px; color: var(--text-muted); font-weight: 800;" id="footerDevText">
+            تصميم وتطوير الفخامة: NOTHING Studio®
+        </div>
+    </section>
+
+    <!-- التطبيق الرئيسي -->
+    <div id="mainApp" class="main-app">
+        
+        <div id="chaptersMenu">
+            <div class="nav-controls" style="justify-content: flex-start; margin-bottom: 25px;">
+                <button class="nav-btn" id="backHomeBtn" onclick="playTransitionSound(); backToHome()">← العودة لاختيار الحضارات</button>
+            </div>
+            
+            <div class="section-header">
+                <h2 id="civMainTitle">فصول الحضارة</h2>
+                <p style="color: var(--text-muted); font-size: 15px;" id="civSubTitle">اختر الفصل التاريخي لاستعراض السجل الملكي المفصل</p>
+            </div>
+
+            <div id="chaptersGridContainer" class="chapters-grid"></div>
+        </div>
+
+        <!-- نافذة الشرح المفصل -->
+        <div id="detailView" class="detail-view">
+            <div class="nav-controls" id="detailNavControls">
+                <button class="nav-btn" id="backChaptersBtn" onclick="playTransitionSound(); goBackToChapters()">← العودة لقائمة الفصول</button>
+                <button class="nav-btn" id="homeBtn" onclick="playTransitionSound(); backToHome()">🏠 الواجهة الرئيسية</button>
+            </div>
+            <div id="detailContent"></div>
+        </div>
+
+        <!-- تذييل المطور -->
+        <footer class="footer">
+            <div class="studio-credit" id="footerStudio">تم التصميم والتطوير الفاخر بواسطة NOTHING Studio®</div>
+            <p style="font-size: 14px; color: var(--text-muted);" id="footerContact">للتواصل مع إدارة المطور ومتابعة المشاريع:</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/ah.mdx.x?dlrf=bmVmdzR1MDJ5eTdv" target="_blank" class="social-btn" id="instaBtn">إنستغرام المطور ↗</a>
+                <a href="https://www.tiktok.com/@ah.md.x?_r=1&_t=ZS-9Ac31nbWRyT" target="_blank" class="social-btn" id="tiktokBtn">تيك توك المطور ↗</a>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        let currentLang = 'ar';
+
+        const translations = {
+            ar: {
+                langBtnText: "English 🌐",
+                mainTitle: "أطلس الحضارات الكبرى",
+                mainSubtitle: "الموسوعة التاريخية التفاعلية الأنقى والأفخم لاستكشاف أمم التاريخ",
+                btnMesop: "بلاد الرافدين",
+                descMesop: "من سومر القديمة حتى العراق الحديث 2026",
+                btnEgypt: "الحضارة المصرية",
+                descEgypt: "من الفراعنة حتى الجمهورية الحديثة 2026",
+                btnRome: "الإمبراطورية الرومانية",
+                descRome: "الجمهورية، الإمبراطورية، والتأثير العالمي",
+                btnGreece: "الحضارة اليونانية",
+                descGreece: "فلسفة، علوم، وعصر الإسكندر الأكبر",
+                devText: "تصميم وتطوير الفخامة: NOTHING Studio®",
+                backHome: "← العودة لاختيار الحضارات",
+                civHeader: "فصول الحضارة",
+                civSub: "اختر الفصل التاريخي لاستعراض السجل الملكي المفصل",
+                backChapters: "← العودة لقائمة الفصول",
+                homeNav: "🏠 الواجهة الرئيسية",
+                footerStudioText: "تم التصميم والتطوير الفاخر بواسطة NOTHING Studio®",
+                footerContactText: "للتواصل مع إدارة المطور ومتابعة المشاريع:",
+                instaText: "إنستغرام المطور ↗",
+                tiktokText: "تيك توك المطور ↗",
+                wikiCaption: "📷 اضغط على الصورة للانتقال المباشر لمصدرها في موسوعة ويكيبيديا",
+                kingsTitle: "أبرز الملوك / القادة / الحكام",
+                achieveTitle: "أبرز الإنجازات والاختراعات",
+                sourcesTitle: "المصادر والمراجع الرسمية:"
+            },
+            en: {
+                langBtnText: "العربية 🌐",
+                mainTitle: "Atlas of Major Civilizations",
+                mainSubtitle: "The purest and most luxurious interactive historical encyclopedia",
+                btnMesop: "Mesopotamia",
+                descMesop: "From ancient Sumer to modern Iraq 2026",
+                btnEgypt: "Egyptian Civilization",
+                descEgypt: "From Pharaohs to the modern Republic 2026",
+                btnRome: "Roman Empire",
+                descRome: "Republic, Empire, and Global Impact",
+                btnGreece: "Greek Civilization",
+                descGreece: "Philosophy, Science, and Alexander the Great",
+                devText: "Luxury Design & Development: NOTHING Studio®",
+                backHome: "← Back to Civilizations",
+                civHeader: "Civilization Chapters",
+                civSub: "Choose a historical chapter to view detailed records",
+                backChapters: "← Back to Chapters",
+                homeNav: "🏠 Home",
+                footerStudioText: "Luxurious Design & Development by NOTHING Studio®",
+                footerContactText: "Connect with the developer and follow projects:",
+                instaText: "Developer Instagram ↗",
+                tiktokText: "Developer TikTok ↗",
+                wikiCaption: "📷 Click the image to view its direct source on Wikipedia",
+                kingsTitle: "Key Kings / Leaders / Rulers",
+                achieveTitle: "Key Achievements & Inventions",
+                sourcesTitle: "Official Sources & References:"
+            }
+        };
+
+        const database = {
+            ar: {
+                mesopotamia: {
+                    name: "حضارة بلاد الرافدين",
+                    chapters: [
+                        {
+                            key: "sumer",
+                            title: "الفصل الأول: الحضارة السومرية",
+                            era: "4000+ قبل الميلاد",
+                            desc: "أقدم حضارة استوطنت جنوب بلاد الرافدين، حيث أسسوا أول مدن التاريخ المنظمة مثل أور وأوروغ واختترعوا الكتابة المسمارية.",
+                            kings: "الملك جلجامش، الملك إيتانا، الملك أور نمو.",
+                            achievements: [
+                                "اختراع الكتابة المسمارية (حوالي 3400 ق.م).",
+                                "اختراع العجلة واستخدامها بالنقل والفخار.",
+                                "بناء المعابد المدرجة (الزيقورات).",
+                                "تطوير أنظمة الري والقنوات الكبرى."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Ziggurat_of_Ur_01.jpg/800px-Ziggurat_of_Ur_01.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/سومر",
+                            sources: "الألواح الطينية المسمارية، متحف أور، والمتحف العراقي."
+                        },
+                        {
+                            key: "akkad",
+                            title: "الفصل الثاني: الحضارة الأكدية",
+                            era: "~2334 قبل الميلاد",
+                            desc: "أول إمبراطورية مركزية موحدة في التاريخ البشري بقيادة سرجون الأكدي الذي وحد مدن الرافدين.",
+                            kings: "الملك سرجون الأكدي، الملك نارام سين.",
+                            achievements: [
+                                "تأسيس أول نظام إمبراطوري عسكري منظم.",
+                                "توحيد المقاييس والأوزان والتقويم.",
+                                "ازدهار اللغة الأكدية في الدبلوماسية."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Head_of_an_Akkadian_ruler_Baghdad_Museum.jpg/640px-Head_of_an_Akkadian_ruler_Baghdad_Museum.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/الإمبراطورية_الأكدية",
+                            sources: "مدونات العصر الأكدي ولوحة نصر نارام سين."
+                        },
+                        {
+                            key: "babylon",
+                            title: "الفصل الثالث: الحضارة البابلية",
+                            era: "~1894 قبل الميلاد",
+                            desc: "مركز العلم والقانون والعمارة الخالدة، واشتهرت بشريعة حمورابي وحدائق بابل المعلقة.",
+                            kings: "الملك حمورابي، الملك نبوخذ نصر الثاني.",
+                            achievements: [
+                                "إصدار شريعة حمورابي (أول قانون مدني شامل).",
+                                "بناء حدائق بابل المعلقة وبوابة عشتار.",
+                                "تقدم مذهل في علم الفلك والرياضيات."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Ishtar_Gate_Berlin_02.jpg/800px-Ishtar_Gate_Berlin_02.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/بابل",
+                            sources: "مسلة حمورابي ومصادر الآثار البابلية."
+                        },
+                        {
+                            key: "assyria",
+                            title: "الفصل الرابع: الحضارة الآشورية",
+                            era: "العصر الوسيط والحديث",
+                            desc: "إمبراطورية عسكرية وإدارية كبرى امتدت بالشرق الأدنى، واشتهرت ببناء مكتبة نينوى.",
+                            kings: "تغلات فلاسر الثالث، الملك آشور بانيبال.",
+                            achievements: [
+                                "تأسيس مكتبة آشور بانيبال (أول مكتبة منظمة).",
+                                "تطوير الفنون الحربية وبناء العواصم المحصنة.",
+                                "براعة فائقة بفنون النحت البارز."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ashurbanipal_hunting_lions_BM.jpg/800px-Ashurbanipal_hunting_lions_BM.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/آشوريون",
+                            sources: "ألواح نينوى المسمارية وآثار العواصم الآشورية."
+                        },
+                        {
+                            key: "abbasid",
+                            title: "الفصل الخامس: الدولة العباسية (بغداد)",
+                            era: "750 - 1258 م",
+                            desc: "العصر الذهبي للعلوم والفلسفة، واتخاذ بغداد عاصمة للخلافة ومدينة السلام المدورة.",
+                            kings: "أبو جعفر المنصور، هارون الرشيد، المأمون.",
+                            achievements: [
+                                "تأسيس (بيت الحكمة) للترجمة والبحث.",
+                                "ازدهار الجبر، البصريات، الطب، والفلك.",
+                                "التخطيط الهندسي الفريد لبغداد المدورة."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Abbasid_Baghdad_round_city.svg/800px-Abbasid_Baghdad_round_city.svg.png",
+                            wikiLink: "https://ar.wikipedia.org/wiki/الدولة_العباسية",
+                            sources: "كتب التاريخ الإسلامي ومخطوطات بغداد."
+                        },
+                        {
+                            key: "royal",
+                            title: "الفصل السادس: العهد الملكي العراقي",
+                            era: "1921 - 1958 م",
+                            desc: "تأسيس الدولة العراقية الحديثة واستقلالها وانضمامها لعصبة الأمم وبناء المؤسسات الدستورية.",
+                            kings: "الملك فيصل الأول، الملك غازي، الملك فيصل الثاني.",
+                            achievements: [
+                                "تأسيس الجيش العراقي الباسل (1921).",
+                                "إرساء منظومة التعليم العالي والجامعات.",
+                                "إنشاء مجلس الإعمار وأضخم المشاريع الحيوية."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/King_Faisal_I_of_Iraq_1920s.jpg/640px-King_Faisal_I_of_Iraq_1920s.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/المملكة_العراقية",
+                            sources: "الأرشيف البريطاني والعراقي ومقر الديوان الملكي."
+                        },
+                        {
+                            key: "republic",
+                            title: "الفصل السابع: العهد الجمهوري العراقي",
+                            era: "1958 - 2026 م",
+                            desc: "التحول نحو النظام الجمهوري والمرحلة المعاصرة حتى العراق الديمقراطي الحديث لعام 2026.",
+                            kings: "رؤساء وحكومات العهد الجمهوري حتى عام 2026.",
+                            achievements: [
+                                "تطوير البنى التحتية والطاقة والنفط الوطني.",
+                                "توسيع شبكة الجامعات والمراكز البحثية.",
+                                "الاستمرارية نحو التطور التكنولوجي والديمقراطي لغاية 2026."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Flag_of_Iraq_%282008%E2%80%93present%29.svg/800px-Flag_of_Iraq_%282008%E2%80%93present%29.svg.png",
+                            wikiLink: "https://ar.wikipedia.org/wiki/العراق",
+                            sources: "الجريدة الرسمية والتقارير الحكومية حتى 2026."
+                        }
+                    ]
+                },
+                egypt: {
+                    name: "الحضارة المصرية العريقة",
+                    chapters: [
+                        {
+                            key: "pharaonic",
+                            title: "الفصل الأول: العصر الفرعوني القديم والحديث",
+                            era: "3100 - 332 قبل الميلاد",
+                            desc: "إحدى أعظم وأطول حضارات العالم قدماً، اشتهرت ببناء الأهرامات، المعابد العظيمة، وعلم التوحيد والفلك والطب المتقدم.",
+                            kings: "الملك نعرمر، الملك خوفو، الملكة حتشبسوت، رمسيس الثاني.",
+                            achievements: [
+                                "بناء الأهرامات الكبرى والمعابد الهندسية المعقدة.",
+                                "ابتكار الكتابة الهيروغليفية وتدوين البرديات.",
+                                "تقدم مذهل في التحنيط، الطب، وعلم الفلك."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Giza_pyramids.jpg/800px-Giza_pyramids.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/مصر القديمة",
+                            sources: "البرديات الفرعونية ومقابر وادي الملوك."
+                        },
+                        {
+                            key: "ptolemaic",
+                            title: "الفصل الثاني: العصر البطلمي واليوناني الروماني",
+                            era: "332 - 30 قبل الميلاد",
+                            desc: "مرحلة تلاقح الثقافة المصرية مع الإغريقية وتأسيس مكتبة الإسكندرية العظمى.",
+                            kings: "الملك بطليموس الأول، الملكة كليوباترا السابعة.",
+                            achievements: [
+                                "تأسيس مكتبة الإسكندرية (أكبر منارة علمية).",
+                                "تطوير منارة الإسكندرية الشهيرة.",
+                                "ازدهار الفلسفة والعلوم الإسكندرانية."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Biblioteca_Alexandrina_-_Overview.jpg/800px-Biblioteca_Alexandrina_-_Overview.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/مصر البطلمية",
+                            sources: "مخطوطات مكتبة الإسكندرية التاريخية."
+                        },
+                        {
+                            key: "islamic_egypt",
+                            title: "الفصل الثالث: مصر الإسلامية (الأزهر والمماليك)",
+                            era: "641 - 1517 م",
+                            desc: "أصبحت مصر مركز الثقل الإسلامي والعلمي، وبناء مدينة القاهرة وجامع الأزهر الشريف.",
+                            kings: "صلاح الدين الأيوبي، الظاهر بيبرس.",
+                            achievements: [
+                                "تأسيس جامع الأزهر الشريف كمنارة إسلامية.",
+                                "بناء قلعة صلاح الدين وتحصينات القاهرة.",
+                                "ازدهار الفنون المعمارية والتجارة العالمية."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Al-Azhar_Mosque_Cairo.jpg/800px-Al-Azhar_Mosque_Cairo.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/مصر الإسلامية",
+                            sources: "خطط المقريزي ووثائق العصور الإسلامية."
+                        },
+                        {
+                            key: "modern_egypt",
+                            title: "الفصل الرابع: مصر الحديثة والمعاصرة حتى 2026",
+                            era: "1805 - 2026 م",
+                            desc: "بناء مصر الحديثة على يد محمد علي باشا، ثم ثورة يوليو 1952، وصولاً للتطور التكنولوجي والعمراني حتى 2026.",
+                            kings: "محمد علي باشا، الخديوي إسماعيل، والرؤساء المعاصرون حتى 2026.",
+                            achievements: [
+                                "حفر قناة السويس (شريان التجارة العالمي).",
+                                "تأسيس الجيش الحديث والبنى التحتية الكبرى.",
+                                "النهضة الثقافية والتحول الرقمي المستمر حتى 2026."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Suez_Canal_container_ship.jpg/800px-Suez_Canal_container_ship.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/مصر",
+                            sources: "دار الكتب والوثائق القومية والتقارير الرسمية حتى 2026."
+                        }
+                    ]
+                },
+                rome: {
+                    name: "الإمبراطورية الرومانية",
+                    chapters: [
+                        {
+                            key: "roman_rep",
+                            title: "الفصل الأول: الجمهورية الرومانية",
+                            era: "509 - 27 قبل الميلاد",
+                            desc: "فترة الصعود السياسي والعسكري لروما في حوض البحر الأبيض المتوسط ونظامها الجمهوري وفصالس مجلس الشيوخ.",
+                            kings: "بومبي الكبير، يوليوس قيصر.",
+                            achievements: [
+                                "تأسيس نظام الفيلق العسكري الروماني المنظم.",
+                                "وضع القوانين المدنية الرومانية (أسس التشريعات).",
+                                "التوسع السياسي وبسط النفوذ على أوروبا."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Roman_Republic_expansion_map.svg/800px-Roman_Republic_expansion_map.svg.png",
+                            wikiLink: "https://ar.wikipedia.org/wiki/الجمهورية_الرومانية",
+                            sources: "مدونات مؤرخي روما (بلوتارخ)."
+                        },
+                        {
+                            key: "roman_emp",
+                            title: "الفصل الثاني: الإمبراطورية الرومانية الكبرى",
+                            era: "27 ق.م - 476 م",
+                            desc: "العصر الذهبي للإمبراطورية التي غطت أوروبا، شمال إفريقيا، والشرق الأوسط، واشتهرت بالهندسة والطرق والعمارة.",
+                            kings: "أغسطس قيصر، تراجان، هادريان، قسطنطين الكبير.",
+                            achievements: [
+                                "بناء شبكة الطرق الرومانية الضخمة.",
+                                "تشييد المعالم الهندسية الخالدة (الكولوسيوم، البانثيون).",
+                                "توحيد القوانين وتوفير السلام الروماني."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Colosseum_in_Rome%2C_Italy_-_April_2007.jpg/800px-Colosseum_in_Rome%2C_Italy_-_April_2007.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/الإمبراطورية_الرومانية",
+                            sources: "الآثار الرومانية ومخطوطات الإمبراطورية."
+                        }
+                    ]
+                },
+                greece: {
+                    name: "الحضارة اليونانية (الإغريقية)",
+                    chapters: [
+                        {
+                            key: "classical_greece",
+                            title: "الفصل الأول: العصر الكلاسيكي ودويلاث المدن",
+                            era: "500 - 323 قبل الميلاد",
+                            desc: "مهد الفلسفة، الديمقراطية، الألعاب الأولمبية، والعلوم الإنسانية في أثينا وإسبرطة.",
+                            kings: "بريكليس، الفلاسفة سقراط، أفلاطون، أرسطو.",
+                            achievements: [
+                                "ابتكار النظام الديمقراطي الأول في أثينا.",
+                                "إرساء قواعد الفلسفة، الرياضيات، والطب (بقراط).",
+                                "تأسيس الألعاب الأولمبية التاريخية."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/The_Parthenon_in_Athens.jpg/800px-The_Parthenon_in_Athens.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/اليونان القديمة",
+                            sources: "كتابات مؤرخي اليونان ومدونات الأكاديميات."
+                        },
+                        {
+                            key: "alexander",
+                            title: "الفصل الثاني: العصر الهلنستي والإمبراطورية المقدونية",
+                            era: "333 - 30 قبل الميلاد",
+                            desc: "انتشار الثقافة اليونانية عبر العالم القديم بقيادة الإسكندر الأكبر وفتح الشرق حتى حدود الهند.",
+                            kings: "الملك فيليب المقدوني، الإسكندر الأكبر المقدوني.",
+                            achievements: [
+                                "توحيد العالم القديم ونشر الثقافة الهلنستية.",
+                                "تأسيس مدينة الإسكندرية ومدن حملت اسمه.",
+                                "الاندماج العلمي والثقافي بين الشرق والغرب."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Alexander_the_Great_mosaic.jpg/800px-Alexander_the_Great_mosaic.jpg",
+                            wikiLink: "https://ar.wikipedia.org/wiki/الإسكندر الأكبر",
+                            sources: "سير الإسكندر الأكبر والمصادر الأثرية المقدونية."
+                        }
+                    ]
+                }
+            },
+            en: {
+                mesopotamia: {
+                    name: "Mesopotamian Civilization",
+                    chapters: [
+                        {
+                            key: "sumer",
+                            title: "Chapter I: Sumerian Civilization",
+                            era: "4000+ BCE",
+                            desc: "The oldest civilization in southern Mesopotamia, establishing the first organized cities like Ur and Uruk and inventing cuneiform writing.",
+                            kings: "King Gilgamesh, King Etana, King Ur-Nammu.",
+                            achievements: [
+                                "Invention of cuneiform writing (circa 3400 BCE).",
+                                "Invention of the wheel and advanced pottery.",
+                                "Building monumental stepped temples (Ziggurats).",
+                                "Developing advanced irrigation and major canals."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Ziggurat_of_Ur_01.jpg/800px-Ziggurat_of_Ur_01.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/Sumer",
+                            sources: "Cuneiform clay tablets, Ur Museum, and the Iraq Museum."
+                        },
+                        {
+                            key: "akkad",
+                            title: "Chapter II: Akkadian Empire",
+                            era: "~2334 BCE",
+                            desc: "The world's first centralized empire under Sargon of Akkad, uniting Mesopotamian city-states.",
+                            kings: "King Sargon of Akkad, King Naram-Sin.",
+                            achievements: [
+                                "Establishing the first organized imperial political and military system.",
+                                "Standardizing weights, measures, and calendar systems.",
+                                "Expansion of the Akkadian language as a diplomatic lingua franca."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Head_of_an_Akkadian_ruler_Baghdad_Museum.jpg/640px-Head_of_an_Akkadian_ruler_Baghdad_Museum.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/Akkadian_Empire",
+                            sources: "Akkadian records, Victory Stele of Naram-Sin."
+                        },
+                        {
+                            key: "babylon",
+                            title: "Chapter III: Babylonian Civilization",
+                            era: "~1894 BCE",
+                            desc: "The center of science, law, and timeless architecture, famed for Hammurabi's Code and the Hanging Gardens.",
+                            kings: "King Hammurabi, King Nebuchadnezzar II.",
+                            achievements: [
+                                "Promulgating Hammurabi's Code (the earliest comprehensive law code).",
+                                "Building the Hanging Gardens of Babylon and the Ishtar Gate.",
+                                "Remarkable advancements in astronomy and mathematics."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Ishtar_Gate_Berlin_02.jpg/800px-Ishtar_Gate_Berlin_02.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/Babylon",
+                            sources: "Hammurabi's Stele and archaeological sources."
+                        },
+                        {
+                            key: "assyria",
+                            title: "Chapter IV: Assyrian Empire",
+                            era: "Middle & Neo-Assyrian Periods",
+                            desc: "A major military and administrative empire spanning the Near East, famed for fortified capitals and Nineveh's library.",
+                            kings: "Tiglath-Pileser III, King Ashurbanipal.",
+                            achievements: [
+                                "Establishing the Library of Ashurbanipal (first organized library).",
+                                "Advanced military tactics and fortified capital construction.",
+                                "Exquisite bas-relief sculptures documenting history."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ashurbanipal_hunting_lions_BM.jpg/800px-Ashurbanipal_hunting_lions_BM.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/Assyria",
+                            sources: "Nineveh cuneiform tablets and Assyrian ruins."
+                        },
+                        {
+                            key: "abbasid",
+                            title: "Chapter V: Abbasid Caliphate (Baghdad)",
+                            era: "750 - 1258 CE",
+                            desc: "The golden age of science and philosophy, establishing Baghdad as the Round City of Peace and global scholarly hub.",
+                            kings: "Caliph Al-Mansur, Harun al-Rashid, Al-Ma'mun.",
+                            achievements: [
+                                "Establishing the House of Wisdom (Bayt al-Hikma) for translation and research.",
+                                "Advancements in algebra, optics, medicine, and astronomy.",
+                                "Unique circular urban planning of Baghdad."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Abbasid_Baghdad_round_city.svg/800px-Abbasid_Baghdad_round_city.svg.png",
+                            wikiLink: "https://en.wikipedia.org/wiki/Abbasid_Caliphate",
+                            sources: "Islamic historical chronicles and Baghdad manuscripts."
+                        },
+                        {
+                            key: "royal",
+                            title: "Chapter VI: Iraqi Royal Era",
+                            era: "1921 - 1958 CE",
+                            desc: "The birth of the modern Iraqi state, its independence, admission to the League of Nations, and establishment of constitutional institutions.",
+                            kings: "King Faisal I, King Ghazi, King Faisal II.",
+                            achievements: [
+                                "Founding of the Iraqi Armed Forces (1921).",
+                                "Laying foundations for modern higher education and universities.",
+                                "Establishing the Development Board for major national infrastructure."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/King_Faisal_I_of_Iraq_1920s.jpg/640px-King_Faisal_I_of_Iraq_1920s.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/Kingdom_of_Iraq",
+                            sources: "British and Iraqi state archives and Royal Court records."
+                        },
+                        {
+                            key: "republic",
+                            title: "Chapter VII: Iraqi Republican Era",
+                            era: "1958 - 2026 CE",
+                            desc: "The transition to a republican system and modern eras up to democratic Iraq in 2026.",
+                            kings: "Successive republican leaders and governments up to 2026.",
+                            achievements: [
+                                "Development of major national infrastructure, energy, and oil sectors.",
+                                "Expansion of universities and research centers across provinces.",
+                                "Continuous progress towards technological and democratic evolution by 2026."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Flag_of_Iraq_%282008%E2%80%93present%29.svg/800px-Flag_of_Iraq_%282008%E2%80%93present%29.svg.png",
+                            wikiLink: "https://en.wikipedia.org/wiki/Iraq",
+                            sources: "Official gazette (Al-Waqi'a al-Iraqiyya) and governmental reports up to 2026."
+                        }
+                    ]
+                },
+                egypt: {
+                    name: "Ancient Egyptian Civilization",
+                    chapters: [
+                        {
+                            key: "pharaonic",
+                            title: "Chapter I: Pharaonic Era",
+                            era: "3100 - 332 BCE",
+                            desc: "One of history's greatest civilizations, famed for monumental pyramids, majestic temples, and early medicine and astronomy.",
+                            kings: "King Narmer, King Khufu, Queen Hatshepsut, Ramses II.",
+                            achievements: [
+                                "Building the Great Pyramids and complex temples.",
+                                "Invention of hieroglyphic writing and medical papyri.",
+                                "Remarkable advancements in mummification, medicine, and astronomy."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Giza_pyramids.jpg/800px-Giza_pyramids.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/Ancient_Egypt",
+                            sources: "Egyptian papyri and Valley of the Kings tombs."
+                        },
+                        {
+                            key: "ptolemaic",
+                            title: "Chapter II: Ptolemaic & Greco-Roman Era",
+                            era: "332 - 30 BCE",
+                            desc: "The cultural blending of Egyptian and Greek traditions following Alexander the Great, establishing the Great Library of Alexandria.",
+                            kings: "Ptolemy I, Queen Cleopatra VII.",
+                            achievements: [
+                                "Founding the Library of Alexandria (greatest ancient beacon of knowledge).",
+                                "Developing the Lighthouse of Alexandria.",
+                                "Flourishing of Alexandrian philosophy and science."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Biblioteca_Alexandrina_-_Overview.jpg/800px-Biblioteca_Alexandrina_-_Overview.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/Ptolemaic_Kingdom",
+                            sources: "Historical manuscripts of the Library of Alexandria."
+                        },
+                        {
+                            key: "islamic_egypt",
+                            title: "Chapter III: Islamic Egypt (Al-Azhar & Mamluks)",
+                            era: "641 - 1517 CE",
+                            desc: "Egypt as the intellectual and cultural epicenter of Islam, constructing Cairo and Al-Azhar Mosque.",
+                            kings: "Saladin, Baibars.",
+                            achievements: [
+                                "Founding Al-Azhar Mosque as a premier global Islamic beacon.",
+                                "Building the Citadel of Saladin and Cairo fortifications.",
+                                "Flourishing of Islamic architecture and global trade."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Al-Azhar_Mosque_Cairo.jpg/800px-Al-Azhar_Mosque_Cairo.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/History_of_Islamic_Egypt",
+                            sources: "Al-Maqrizi's Khitat and Islamic era documents."
+                        },
+                        {
+                            key: "modern_egypt",
+                            title: "Chapter IV: Modern & Contemporary Egypt to 2026",
+                            era: "1805 - 2026 CE",
+                            desc: "Building modern Egypt under Muhammad Ali Pasha, the 1952 revolution, and ongoing technological growth through 2026.",
+                            kings: "Muhammad Ali Pasha, Khedive Ismail, and modern presidents up to 2026.",
+                            achievements: [
+                                "Digging the Suez Canal (global trade artery).",
+                                "Building a modern army and major national infrastructure.",
+                                "Cultural Renaissance and ongoing digital transformation through 2026."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Suez_Canal_container_ship.jpg/800px-Suez_Canal_container_ship.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/Egypt",
+                            sources: "National Library and Archives of Egypt and official reports up to 2026."
+                        }
+                    ]
+                },
+                rome: {
+                    name: "Roman Empire",
+                    chapters: [
+                        {
+                            key: "roman_rep",
+                            title: "Chapter I: Roman Republic",
+                            era: "509 - 27 BCE",
+                            desc: "Rome's political and military rise across the Mediterranean basin with its republican senate system.",
+                            kings: "Pompey the Great, Julius Caesar.",
+                            achievements: [
+                                "Establishing the structured Roman legion military system.",
+                                "Formulating Roman civil law (foundations of Western legislation).",
+                                "Political expansion across the Italian peninsula and beyond."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Roman_Republic_expansion_map.svg/800px-Roman_Republic_expansion_map.svg.png",
+                            wikiLink: "https://en.wikipedia.org/wiki/Roman_Republic",
+                            sources: "Writings of Roman historians (Plutarch, Livy)."
+                        },
+                        {
+                            key: "roman_emp",
+                            title: "Chapter II: Roman Empire",
+                            era: "27 BCE - 476 CE",
+                            desc: "The golden age of the empire spanning Europe, North Africa, and the Middle East, famed for engineering and monumental architecture.",
+                            kings: "Augustus Caesar, Trajan, Hadrian, Constantine the Great.",
+                            achievements: [
+                                "Building vast networks of Roman roads connecting continents.",
+                                "Constructing timeless monuments (Colosseum, Pantheon, aqueducts).",
+                                "Unifying laws and providing the Pax Romana."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Colosseum_in_Rome%2C_Italy_-_April_2007.jpg/800px-Colosseum_in_Rome%2C_Italy_-_April_2007.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/Roman_Empire",
+                            sources: "Preserved Roman ruins and imperial manuscripts."
+                        }
+                    ]
+                },
+                greece: {
+                    name: "Greek Civilization",
+                    chapters: [
+                        {
+                            key: "classical_greece",
+                            title: "Chapter I: Classical Greece & City-States",
+                            era: "500 - 323 BCE",
+                            desc: "The cradle of philosophy, democracy, Olympic games, and human sciences in Athens and Sparta.",
+                            kings: "Pericles, Philosophers Socrates, Plato, Aristotle.",
+                            achievements: [
+                                "Inventing the first democratic system in Athens.",
+                                "Establishing foundations of philosophy, geometry, and medicine (Hippocrates).",
+                                "Founding the historic Olympic Games."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/The_Parthenon_in_Athens.jpg/800px-The_Parthenon_in_Athens.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/Classical_Greece",
+                            sources: "Writings of Greek historians and academy records."
+                        },
+                        {
+                            key: "alexander",
+                            title: "Chapter II: Hellenistic Era & Macedonian Empire",
+                            era: "333 - 30 BCE",
+                            desc: "The spread of Greek culture across the ancient world under Alexander the Great, conquering eastward to India.",
+                            kings: "King Philip II of Macedon, Alexander the Great.",
+                            achievements: [
+                                "Unifying the ancient world and spreading Hellenistic culture.",
+                                "Founding Alexandria and numerous cities bearing his name.",
+                                "Scientific and cultural synthesis between East and West."
+                            ],
+                            imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Alexander_the_Great_mosaic.jpg/800px-Alexander_the_Great_mosaic.jpg",
+                            wikiLink: "https://en.wikipedia.org/wiki/Alexander_the_Great",
+                            sources: "Biographies of Alexander the Great and archaeological sources."
+                        }
+                    ]
+                }
+            }
+        };
+
+        let currentCivKey = null;
+
+        function playTransitionSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(520, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.2);
+            } catch(e) {}
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const t = translations[currentLang];
+            const htmlRoot = document.getElementById('htmlRoot');
+
+            htmlRoot.setAttribute('lang', currentLang);
+            htmlRoot.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+
+            document.getElementById('langBtn').textContent = t.langBtnText;
+            document.getElementById('studioBrandText').textContent = "NOTHING Studio®";
+            document.getElementById('mainTitle').textContent = t.mainTitle;
+            document.getElementById('mainSubtitle').textContent = t.mainSubtitle;
+            document.getElementById('btnMesop').textContent = t.btnMesop;
+            document.getElementById('descMesop').textContent = t.descMesop;
+            document.getElementById('btnEgypt').textContent = t.btnEgypt;
+            document.getElementById('descEgypt').textContent = t.descEgypt;
+            document.getElementById('btnRome').textContent = t.btnRome;
+            document.getElementById('descRome').textContent = t.descRome;
+            document.getElementById('btnGreece').textContent = t.btnGreece;
+            document.getElementById('descGreece').textContent = t.descGreece;
+            document.getElementById('footerDevText').textContent = t.devText;
+            document.getElementById('backHomeBtn').textContent = t.backHome;
+            document.getElementById('civMainTitle').textContent = t.civHeader;
+            document.getElementById('civSubTitle').textContent = t.civSub;
+            document.getElementById('backChaptersBtn').textContent = t.backChapters;
+            document.getElementById('homeBtn').textContent = t.homeNav;
+            document.getElementById('footerStudio').textContent = t.footerStudioText;
+            document.getElementById('footerContact').textContent = t.footerContactText;
+            document.getElementById('instaBtn').textContent = t.instaText;
+            document.getElementById('tiktokBtn').textContent = t.tiktokText;
+
+            if (currentCivKey) {
+                openCivilization(currentCivKey);
+            }
+        }
+
+        function openCivilization(civKey) {
+            currentCivKey = civKey;
+            const civData = database[currentLang][civKey];
+            if (!civData) return;
+
+            document.getElementById('heroSection').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            document.getElementById('detailView').style.display = 'none';
+            document.getElementById('chaptersMenu').classList.remove('hidden');
+
+            document.getElementById('civMainTitle').textContent = `${translations[currentLang].civHeader}: ${civData.name}`;
+
+            const gridContainer = document.getElementById('chaptersGridContainer');
+            gridContainer.innerHTML = '';
+
+            civData.chapters.forEach(ch => {
+                gridContainer.innerHTML += `
+                    <button class="chapter-btn" onclick="playTransitionSound(); showChapterDetail('${ch.key}')">
+                        <span class="btn-title">${ch.title}</span>
+                        <span class="btn-era">${ch.era}</span>
+                    </button>
+                `;
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showChapterDetail(chapterKey) {
+            const civData = database[currentLang][currentCivKey];
+            const chapter = civData.chapters.find(ch => ch.key === chapterKey);
+            if (!chapter) return;
+
+            document.getElementById('chaptersMenu').classList.add('hidden');
+            const detailView = document.getElementById('detailView');
+            const detailContent = document.getElementById('detailContent');
+            const t = translations[currentLang];
+
+            let achievementsHtml = chapter.achievements.map(item => `<li>${item}</li>`).join('');
+
+            detailContent.innerHTML = `
+                <div class="wiki-image-container">
+                    <a href="${chapter.wikiLink}" target="_blank" title="Wikipedia Source">
+                        <img src="${chapter.imgUrl}" alt="${chapter.title}">
+                    </a>
+                    <div class="wiki-caption">${t.wikiCaption}</div>
+                </div>
+
+                <div class="detail-title">${chapter.title}</div>
+                <div class="detail-era">${chapter.era}</div>
+                <p class="detail-desc">${chapter.desc}</p>
+                
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4>${t.kingsTitle}</h4>
+                        <p>${chapter.kings}</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>${t.achieveTitle}</h4>
+                        <ul>${achievementsHtml}</ul>
+                    </div>
+                </div>
+
+                <div class="sources-box">
+                    📚 <strong>${t.sourcesTitle}</strong> ${chapter.sources}
+                </div>
+            `;
+
+            detailView.style.display = 'block';
+            window.scrollTo({ top: 100, behavior: 'smooth' });
+        }
+
+        function goBackToChapters() {
+            document.getElementById('detailView').style.display = 'none';
+            document.getElementById('chaptersMenu').classList.remove('hidden');
+            window.scrollTo({ top: 100, behavior: 'smooth' });
+        }
+
+        function backToHome() {
+            document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('heroSection').style.display = 'flex';
+            currentCivKey = null;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
